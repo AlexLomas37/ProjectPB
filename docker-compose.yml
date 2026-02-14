@@ -33,7 +33,7 @@ services:
     container_name: projectpb-backend
     restart: always
     ports:
-      - "8080:8080"
+      - "8085:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - MONGO_HOST=mongo
