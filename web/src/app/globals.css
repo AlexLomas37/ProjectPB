@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b; /* Zinc-950 (True black/neutral) */
+  --foreground: #f8fafc; /* slate-50 */
+  
+  /* Dynamic Game Colors */
+  --primary-color: #6366f1; /* indigo-500 default */
+  --game-bg: #09090b;
+  --game-hf: #09090b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-game-primary: var(--primary-color);
+  --color-game-bg: var(--game-bg);
+  --color-game-hf: var(--game-hf);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--game-bg);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.5s ease;
+  min-height: 100vh;
+}
+
+/* Custom utility for dynamic borders/text */
+.border-game { border-color: color-mix(in srgb, var(--primary-color), transparent 70%); }
+.text-game { color: var(--primary-color); }
+.bg-game { background-color: var(--primary-color); }
+
+/* Ensure scrollbars are dark */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--game-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
