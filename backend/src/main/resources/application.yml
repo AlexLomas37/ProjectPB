@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: projectpb-backend
+  
+  # MongoDB Configuration
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USER:admin}:${MONGO_PASSWORD:password}@${MONGO_HOST:localhost}:27017/projectpb?authSource=admin
+
+  # Redis Configuration
+
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+
+  # Docker Compose (Spring Boot 3.1+ feature, helpful for dev)
+  docker:
+    compose:
+      enabled: true
+      file: ../docker-compose.yml
+
+logging:
+  level:
+    root: INFO
+    com.projectpb: DEBUG
