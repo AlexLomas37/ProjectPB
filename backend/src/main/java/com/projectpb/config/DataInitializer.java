@@ -15,6 +15,9 @@ import java.util.UUID;
 @Configuration
 public class DataInitializer {
 
+    @org.springframework.beans.factory.annotation.Value("${APP_ADMIN_PASSWORD:password}")
+    private String adminPassword;
+
     @Bean
     public CommandLineRunner initData(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         return args -> {
@@ -42,11 +45,11 @@ public class DataInitializer {
                 User admin = new User();
                 admin.setUsername("admin");
                 admin.setEmail("admin@bmad.com");
-                admin.setPassword(passwordEncoder.encode("password"));
+                admin.setPassword(passwordEncoder.encode(adminPassword));
                 admin.setRoles(Collections.singleton("ROLE_ADMIN"));
                 
                 userRepository.save(admin);
-                System.out.println("✅ Admin user created: admin / password");
+                System.out.println("✅ Admin user created: admin / " + adminPassword);
             }
         };
     }

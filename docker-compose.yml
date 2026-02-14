@@ -41,6 +41,7 @@ services:
       - MONGO_PASSWORD=${MONGO_PASSWORD:-password}
       - REDIS_HOST=redis
       - REDIS_PASSWORD=${REDIS_PASSWORD:-password}
+      - APP_ADMIN_PASSWORD=${APP_ADMIN_PASSWORD:-password}
     depends_on:
       - mongo
       - redis
