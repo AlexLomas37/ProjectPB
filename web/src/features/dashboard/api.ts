@@ -41,6 +41,7 @@ export interface RankedSession {
   score?: string; // "13-11"
   notes?: string;
   date: string;
+  status?: 'ACTIVE' | 'COMPLETED' | 'ABORTED';
 }
 
 export interface Vod {

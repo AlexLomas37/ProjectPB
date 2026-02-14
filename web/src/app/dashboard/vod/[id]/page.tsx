@@ -210,11 +210,11 @@ export default function VodDetailPage() {
               <h3 className="font-black text-[9px] text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
                 <MessageSquare size={12} className="text-[var(--primary-color)]" /> Timestamps & Notes
               </h3>
-              <span className="text-[10px] font-black bg-slate-800 px-1.5 py-0.5 rounded text-slate-500">{vod.comments.length}</span>
+              <span className="text-[10px] font-black bg-slate-800 px-1.5 py-0.5 rounded text-slate-500">{vod.comments?.length || 0}</span>
             </div>
 
             <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
-              {vod.comments.map((c: any) => (
+              {vod.comments?.map((c: any) => (
                 <div 
                   key={c.id} 
                   onClick={() => !vod.isReplay && seekTo(c.seconds)}
@@ -227,7 +227,7 @@ export default function VodDetailPage() {
                   <p className="text-slate-200 text-xs leading-relaxed group-hover:text-white transition-colors">{c.text}</p>
                 </div>
               ))}
-              {vod.comments.length === 0 && (
+              {(!vod.comments || vod.comments.length === 0) && (
                 <div className="h-full flex flex-col items-center justify-center opacity-30 space-y-4 py-12">
                   <Clock size={32} />
                   <p className="text-[10px] font-black uppercase tracking-widest text-center">Aucune note pour le moment</p>
