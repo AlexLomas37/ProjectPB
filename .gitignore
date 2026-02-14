@@ -1,0 +1,65 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Node.js (Web & Mobile)
+node_modules/
+.next/
+/web/out/
+/web/build/
+/mobile/dist/
+/mobile/web-build/
+.expo/
+.metro-health-check*
+*.tsbuildinfo
+next-env.d.ts
+expo-env.d.ts
+
+# Java (Backend)
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs & Temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.gemini/tmp/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# Mobile Native artifacts
+/mobile/ios/
+/mobile/android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Tooling/AI Specific
+_bmad/
+_bmad-output/
+.agent/
+.claude/
+.gemini/
