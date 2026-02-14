@@ -1,63 +1,64 @@
 version: '3.8'
 
 services:
-  # MongoDB - Primary Database (Game Configs, Events, Users)
+  # Infrastructure
   mongo:
     image: mongo:7.0
     container_name: projectpb-mongo
-    ports:
-      - "27017:27017"
+    restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-password}
     volumes:
       - mongo-data:/data/db
+    # In production, we don't expose ports to the outside world if using a proxy
+    # ports:
+    #   - "27017:27017"
 
-  # Redis - Message Broker for WebSockets & Cache
   redis:
     image: redis:7.0-alpine
     container_name: projectpb-redis
-    ports:
-      - "6379:6379"
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASSWORD:-password}
     volumes:
       - redis-data:/data
-
-  # Mongo Express - Web UI for MongoDB (Optional, for Dev)
-  mongo-express:
-    image: mongo-express
-    container_name: projectpb-mongo-express
-    ports:
-      - "8081:8081"
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-      - ME_CONFIG_MONGODB_URL=mongodb://admin:password@mongo:27017/
-    depends_on:
-      - mongo
+    # ports:
+    #   - "6379:6379"
 
   # Backend - Spring Boot API
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: projectpb-backend
+    restart: always
     ports:
       - "8080:8080"
     environment:
+      - SPRING_PROFILES_ACTIVE=prod
       - MONGO_HOST=mongo
-      - MONGO_USER=admin
-      - MONGO_PASSWORD=password
+      - MONGO_USER=${MONGO_USER:-admin}
+      - MONGO_PASSWORD=${MONGO_PASSWORD:-password}
       - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-password}
     depends_on:
       - mongo
       - redis
 
   # Web - Next.js Frontend
   web:
-    build: ./web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
     container_name: projectpb-web
+    restart: always
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
     depends_on:
       - backend
 

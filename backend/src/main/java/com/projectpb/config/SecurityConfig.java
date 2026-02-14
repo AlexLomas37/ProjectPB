@@ -74,6 +74,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/health").permitAll()
                 .requestMatchers("/api/test/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()
